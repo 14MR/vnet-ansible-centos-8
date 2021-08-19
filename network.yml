@@ -1,0 +1,31 @@
+- hosts: all
+  name: network
+  become: true
+  tasks:
+  - include_role:
+      name: linux-system-roles.network
+
+    vars:
+      network_connections:
+        - name: eth0
+          type: ethernet
+          state: up
+
+        - name: vlan-4001
+          type: vlan
+          ip:
+            address:
+              - "192.168.20.10/20"
+          parent: eth0
+          vlan:
+            id: 1
+          state: up
+        - name: vlan-4000
+          type: vlan
+          ip:
+            address:
+              - "192.168.16.10/24"
+          parent: eth0
+          vlan:
+            id: 2
+          state: up
